@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from "react";
 import '../style/tailwind.css';
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 
 const RegistrationForm = () => {
+    const [userNameReg, setUserNameReg] = useState("")
+    const [userPwReg, setUserPwReg] = useState("")
+    const [userEmailReg, setUserEmailReg] = useState("")
+    const navigate = useNavigate();
+    const handlReg = async () => {
+        try {
+            await axios.post("http://localhost:8000/users",
+                {
+                    userName: userNameReg,
+                    userPssword: userPwReg,
+                    userEmail: userEmailReg
+                }
+            ).then((response) => { console.log(response) })
+            navigate("/")
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">
             <div className="bg-white lg:w-5/12 md:6/12 w-10/12 shadow-3xl">
@@ -20,18 +40,9 @@ const RegistrationForm = () => {
                         <input
                             type="text"
                             id="username"
+                            onChange={(e) => { setUserNameReg(e.target.value) }}
                             className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
                             placeholder="Username"
-                        />
-                    </div>
-                    <div className="flex items-center text-lg mb-6 md:mb-8">
-                        <svg className="absolute ml-3" width="24" viewBox="0 0 24 24">
-                            <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z" /> </svg>
-                        <input
-                            type="email"
-                            id="email"
-                            className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
-                            placeholder="email"
                         />
                     </div>
                     <div className="flex items-center text-lg mb-6 md:mb-8">
@@ -41,6 +52,7 @@ const RegistrationForm = () => {
                         <input
                             type="password"
                             id="password"
+                            onChange={(e) => { setUserPwReg(e.target.value) }}
                             className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
                             placeholder="Password"
                         />
@@ -56,9 +68,21 @@ const RegistrationForm = () => {
                             placeholder="confirmPassword"
                         />
                     </div>
+                    <div className="flex items-center text-lg mb-6 md:mb-8">
+                        <svg className="absolute ml-3" width="24" viewBox="0 0 24 24">
+                            <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z" /> </svg>
+                        <input
+                            type="email"
+                            id="email"
+                            onChange={(e) => { setUserEmailReg(e.target.value) }}
+                            className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
+                            placeholder="email"
+                        />
+                    </div>
                     <button
                         type="button"
                         className="bg-yellow-500 text-white py-3 px-8 rounded-full text-lg w-full mb-6 md:mb-8"
+                        onClick={handlReg}
                     >
                         Register
                     </button>

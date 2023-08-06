@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import '../style/tailwind.css';
 import Modal from 'react-modal';
 import RegistrationForm from './RegistrationForm';
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [userNameReg, setUserNameReg] = useState('')
+  const [userPwReg, setUserPwReg] = useState('')
+  const [users, setUsers] = useState([])
+
+
+
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
-        navigate("/Registration")
+      navigate("/Registration")
     } catch (err) {
-        console.log(err)
+      console.log(err)
     }
-}
+  }
 
 
   return (
