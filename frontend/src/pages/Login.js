@@ -6,21 +6,31 @@ import RegistrationForm from './RegistrationForm';
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [userNameReg, setUserNameReg] = useState('')
-  const [userPwReg, setUserPwReg] = useState('')
-  const [users, setUsers] = useState([])
+  const [userNe, setUserNe] = useState("")
+  const [userPw, setUserPw] = useState("")
+  const [loginStatus, setloginStatus] = useState("")
 
 
 
   const navigate = useNavigate();
+
   const handleClick = async () => {
     try {
-      navigate("/Registration")
+      const response = await axios.post("http://localhost:8000/login", {
+        userName: userNe,
+        userPassword: userPw
+      });
+      const loginStatusData = response.data;
+      if (loginStatusData.message) {
+        setloginStatus(loginStatusData.message);
+      } else if (loginStatusData.length > 0) {
+        alert("Login successuly")
+      }
+
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
-
 
   return (
     <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">
@@ -38,6 +48,9 @@ const Login = () => {
             <input
               type="text"
               id="username"
+              onChange={(e) => {
+                setUserNe(e.target.value)
+              }}
               className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
               placeholder="Username"
             />
@@ -49,22 +62,27 @@ const Login = () => {
             <input
               type="password"
               id="password"
+              onChange={(e) => {
+                setUserPw(e.target.value)
+              }}
               className="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full"
               placeholder="Password"
             />
           </div>
+          <h1><span className="text-red-500">{loginStatus}</span></h1>
+          <br></br>
           <button
             type="button"
             className="bg-yellow-500 text-white py-3 px-8 rounded-full text-lg w-full mb-6 md:mb-8"
+            onClick={handleClick}
           >
             Log In
           </button>
           <button
             type="button"
             className="text-yellow-500 text-lg"
-            onClick={handleClick}
           >
-            Create an Account
+            <Link to="/Registration"> Create an Account</Link>
           </button>
         </form>
       </div>

@@ -12,7 +12,7 @@ const db = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "Lemonclf0428!",
-    database: "login_system",
+    database: "loginsystem",
 });
 
 app.get("/", (req, res) => {
@@ -29,17 +29,36 @@ app.get("/users", (req, res) => {
 
 app.post("/users", (req, res) => {
     const q = "INSERT INTO users (`userName`, `userPassword`, `userEmail`) VALUES (?,?,?)";
-    const values = [
-        req.body.userName,
-        req.body.userPassword,
-        req.body.userEmail,
-    ];
+    const values =
+        [
+            req.body.userName,
+            req.body.userPassword,
+            req.body.userEmail
+        ]
 
-    db.query(q, [values], (err, data) => {
+    db.query(q, values, (err, data) => {
         if (err) return res.json(err);
         return res.json("done");
     });
 });
+
+
+app.post("/login", (req, res) => {
+    const userName = req.body.userName;
+    const userPassword = req.body.userPassword;
+    const q = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
+    db.query(q, [userName, userPassword], (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      } else {
+        if (result.length > 0) {
+          res.send(result);
+        } else {
+          res.send({ message: "Wrong combination!" });
+        }
+      }
+    });
+  });
 
 
 app.listen(PORT, () => {
