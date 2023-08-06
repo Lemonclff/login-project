@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter , Routes, Route } from "react-router-dom";
 import Login from './pages/Login';
 import RegistrationForm from './pages/RegistrationForm';
 import './style/tailwind.css';
@@ -6,12 +6,12 @@ import './style/tailwind.css';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter >
       <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="/Registration" element={<RegistrationForm/>} />
       </Routes>
-      </BrowserRouter>
+      </HashRouter >
     </div>
   );
 }
