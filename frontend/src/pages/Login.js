@@ -25,7 +25,7 @@ const Login = () => {
         setloginStatus(loginStatusData.message);
       } else if (loginStatusData.length > 0) {
         alert("Login successuly")
-        window.location.reload()
+        setloginStatus("Login successuly");
       }
 
     } catch (err) {
