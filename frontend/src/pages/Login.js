@@ -9,8 +9,21 @@ const Login = () => {
   const [userNe, setUserNe] = useState("")
   const [userPw, setUserPw] = useState("")
   const [loginStatus, setloginStatus] = useState("")
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-
+  // const checkLoginStatus = async () => {
+  //   try {
+  //     const response = await axios.get("/checkLoginStatus");
+  //     const { loggedIn } = response.data;
+  //     setLoggedIn(loggedIn);
+  //     console.log(loggedIn);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkLoginStatus();
+  // }, []);
 
   const navigate = useNavigate();
 
@@ -31,6 +44,24 @@ const Login = () => {
       console.log(err);
     }
   }
+  // const handleClick = async () => {
+  //   try {
+  //     const response = await axios.post("/login", {
+  //       userName: userNe,
+  //       userPassword: userPw
+  //     });
+  //     const loginStatusData = response.data;
+  //     if (loginStatusData.message) {
+  //       setloginStatus(loginStatusData.message);
+  //     } else if (loginStatusData.length > 0) {
+  //       setLoggedIn(true);
+  //       localStorage.setItem("userId", loginStatusData[0].id);
+  //       alert("Login successfully");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">
